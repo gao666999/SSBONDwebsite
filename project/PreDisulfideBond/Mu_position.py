@@ -71,7 +71,7 @@ def xyz4a_position(i,lines):
     #centroid P2 into f
     template2 = template2 - rmsd.centroid(template2)
     #for debug
-    print '*************8888888888888888'
+    print ('*************8888888888888888')
     #print template1.shape#(4,3)
     #print a_acid_p.shape#(5,3)
     #print template2.shape#(6.3)
@@ -86,7 +86,7 @@ def xyz4a_position(i,lines):
     #for n in range(0,6,1):
     position5 = ('%8s'%str(float('%.3f'%C[4][0]))) + ('%8s'%str(float('%.3f'%C[4][1]))) + ('%8s'%str(float('%.3f'%C[4][2])))
     position6 = ('%8s'%str(float('%.3f'%C[5][0]))) + ('%8s'%str(float('%.3f'%C[5][1]))) + ('%8s'%str(float('%.3f'%C[5][2])))
-    print 'print the position of position 5 and position 6'
+    print ('print the position of position 5 and position 6')
     return position5,position6
 
 
@@ -174,5 +174,5 @@ def xyz4a_position_type2(i,lines):
     #for n in range(0,6,1):
     position5 = ('%8s'%str(float('%.3f'%C[4][0]))) + ('%8s'%str(float('%.3f'%C[4][1]))) + ('%8s'%str(float('%.3f'%C[4][2])))
     position6 = ('%8s'%str(float('%.3f'%C[5][0]))) + ('%8s'%str(float('%.3f'%C[5][1]))) + ('%8s'%str(float('%.3f'%C[5][2])))
-    print 'print the position of position 5 and position 6'
+    print ('print the position of position 5 and position 6')
     return position5,position6

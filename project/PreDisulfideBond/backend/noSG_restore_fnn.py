@@ -11,7 +11,7 @@ import tensorflow as tf
 import argparse
 import os
 import math
-import exceptions
+#import exceptions
 from . import noSG_fnn
 from django.conf import settings  # added by xxli
 
@@ -43,17 +43,17 @@ def predict(args,sess,images,labels,logits,out):
                 s = -2.1
                 s = '%.3f'% s
             result_dict[id_ord[outi][0]+'-'+id_ord[outi][1]] = str('%.3f'% out_[outi][1]) + ' ' + str(s)
-    print 'finish predict.'
+    print ('finish predict.')
     return result_dict
 
 
 
 def main(args):
-    sess=tf.Session()
+    sess=tf.compat.v1.Session()
     ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
     ckpt_path = os.path.join(checkpoint_dir, 'model.ckpt-800')  # modified by xxli
     #print(ckpt_path)
-    saver = tf.train.import_meta_graph(ckpt_path + '.meta')
+    saver = tf.compat.v1.train.import_meta_graph(ckpt_path + '.meta')
     saver.restore(sess,ckpt_path)
     graph = tf.get_default_graph()
 

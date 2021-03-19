@@ -1,7 +1,7 @@
 import os
 import math
 import numpy as np
-import AminoAcid as AA
+from project.PreDisulfideBond.Nepre import AminoAcid as AA
 import gc
 import sys
 import math
@@ -28,14 +28,13 @@ def load_EnergyMatrix():
             "HIS":{},"LYS":{},"ARG":{},"ASP":{},"GLU":{},}
 
     List = aaDict.keys()
-    List.sort()
+    sorted(List)
 
-    f1 = open("./project/PreDisulfideBond/Nepre/radius.npy")
+    f1 = "./project/PreDisulfideBond/Nepre/radius.npy"
     #f1 = open("/Users/xg666/Desktop/xqdongV2/project/project/PreDisulfideBond/Nepre/radius.npy")
     for amino1 in List:
         for amino2 in List:
             aaDict[amino1][amino2] = np.load(f1)
-    f1.close()
     return aaDict
 
 
@@ -377,8 +376,8 @@ if __name__ == "__main__":
     matrix = load_EnergyMatrix()
     if len(args) == 1:
         E = calculate_energy_for_pdbfile(pdb,matrix)
-        print "Nepre Potential Energy(Radius)"
-        print pdb,E
+        print ("Nepre Potential Energy(Radius)")
+        print (pdb,E)
     if len(args) == 2:
         n_sites = 1
         n_mutations = int(args[1])

@@ -1,11 +1,10 @@
 import re,os
-import Nepre
+import project.PreDisulfideBond.Nepre
 import rmsd
-import Mu_position as Mp
-from Nepre import Nepre_v3
-from Nepre import AminoAcid
+import project.PreDisulfideBond.Mu_position as Mp
+from project.PreDisulfideBond.Nepre import Nepre_v3
+from project.PreDisulfideBond.Nepre import AminoAcid
 def energy2(pdbfile,dict1):
-
     mu_list = []
     for pairs in dict1.keys():
         pairs_list = []
@@ -16,20 +15,16 @@ def energy2(pdbfile,dict1):
             idnumber1 = pairs[0][4:].strip()
             chainid1 = pairs[0][3:4]
             mutation_information1 = create_new_AA(pdbfile,wildtype_name1,idnumber1,chainid1)
-            pairs_list.append( (idnumber1, chainid1,wildtype_name1, mutationtype_name1, mutation_information1) )
-
+            pairs_list.append( (idnumber1, chainid1,wildtype_name1, mutationtype_name1, mutation_information1))
         wildtype_name2 = pairs[1][:3].strip()
         if wildtype_name2 != 'CYS':
             mutationtype_name2 = 'CYS'
-
             idnumber2 = pairs[1][4:].strip()
             chainid2 = pairs[0][3:4]
             mutation_information2 = create_new_AA(pdbfile,wildtype_name2,idnumber2,chainid2)
             pairs_list.append((idnumber2,chainid2,wildtype_name2,mutationtype_name2, mutation_information2))
-
         mu_list.append(pairs_list)
-
-    energy_list = Nepre.Nepre_v3.get_energy(pdbfile,mu_list)
+    energy_list = Nepre_v3.get_energy(pdbfile,mu_list)
     lenth = len(energy_list)
     n = 0
     for i in dict1.keys():

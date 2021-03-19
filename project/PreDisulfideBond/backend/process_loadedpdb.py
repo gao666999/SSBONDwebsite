@@ -25,15 +25,15 @@ def find_mutate_rank(dict_result):
     # print ssbonds_detect
     for item in dict_result:
         k += 1;
-        print item
+        print (item)
         temp = item.split('-')
 
         temp_list = [filter(str.isdigit,temp[0]),filter(str.isdigit,temp[1])]
         if temp_list in ssbonds_detect.tolist():
-            print temp_list
+            print (temp_list)
             rank_dict[item] = str(float('%.3f'% (k/float(len(dict_result))))*100) + '%'
 
-    print rank_dict
+    print (rank_dict)
 
 def process_pdb(args):
 
@@ -56,13 +56,13 @@ def process_pdb(args):
         map_list, map_id ,mol_type_list=noSG_extract_unknown_map.find_map_element(args)
         possible_ssbond, possible_ssbond_id = noSG_extract_unknown_map.make_ssbond_without_repeat(map_list, map_id, mol_type_list)
         full_distance_map = sdm.convert_to_nxn_map(np.array(possible_ssbond))
-        print 'canditate bonds',len(full_distance_map)
+        print ('canditate bonds',len(full_distance_map))
         predict_path = np.array(full_distance_map)
         predict_ord_path = np.array(possible_ssbond_id)
         result_dict = noSG_restore_fnn.main([predict_path,predict_ord_path,name])
                # print(result_dict)
                 #print("hello world")
-        sorted_result_dict = sorted(result_dict.iteritems(), key=operator.itemgetter(1), reverse=True)
+        sorted_result_dict = sorted(result_dict.items(), key=operator.itemgetter(1), reverse=True)
         final_dict = OrderedDict()
         print(final_dict)
         for item in sorted_result_dict:
@@ -78,7 +78,7 @@ def process_pdb(args):
         # print map_list
         possible_ssbond, possible_ssbond_id = noSG_extract_unknown_map2.make_ssbond_without_repeat(map_list, map_id, mol_type_list)
         full_distance_map = sdm.convert_to_nxn_map(np.array(possible_ssbond))
-        print 'canditate bonds',len(full_distance_map)
+        print ('canditate bonds',len(full_distance_map))
         predict_path = np.array(full_distance_map)
         predict_ord_path = np.array(possible_ssbond_id)
         result_dict = noSG_restore_fnn.main([predict_path,predict_ord_path,name])
@@ -96,10 +96,10 @@ def process_pdb(args):
 def process_pdb1(args):
     name = args.split('/')[-1].split('.')[0]
     # I want to see what the name look like
-    print name
+    print (name)
     map_list, map_id ,mol_type_list=extract_unknown_map.find_map_element(args)
     if map_list == []:
-        print 'no bonds'
+        print ('no bonds')
         return False
     possible_ssbond, possible_ssbond_id = extract_unknown_map.make_ssbond_without_repeat(map_list, map_id, mol_type_list)
     #print possible_ssbond
@@ -107,11 +107,11 @@ def process_pdb1(args):
         #print possible_ssbond_id
     #print '**********************************'
     full_distance_map = sdm.convert_to_nxn_map(np.array(possible_ssbond))
-    print 'canditate bonds',len(full_distance_map)
+    print ('canditate bonds',len(full_distance_map))
     predict_path = np.array(full_distance_map)
     predict_ord_path = np.array(possible_ssbond_id)
     result_dict = noSG_restore_fnn.main([predict_path,predict_ord_path,name])
-    sorted_result_dict = sorted(result_dict.iteritems(), key=operator.itemgetter(1), reverse=True)
+    sorted_result_dict = sorted(result_dict.items(), key=operator.itemgetter(1), reverse=True)
     final_dict = sorted_result_dict
     #print sorted_result_dict
         #print'hello  world'

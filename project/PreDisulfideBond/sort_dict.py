@@ -18,7 +18,7 @@ def sort_dict(dict1):
     s3 = pd.Series(en)
     df = pd.DataFrame({"key":s0,"probability":s1,"entropy":s2,"energy":s3})
     cols = ["key", "probability", "entropy", "energy"]
-    df = df.ix[:,cols]
+    df = df.loc[:,cols]
     #print df
     df_pb = df.sort_values(by = "probability", axis = 0, ascending = False)
     df_ep = df.sort_values(by = "entropy", axis = 0, ascending = False)

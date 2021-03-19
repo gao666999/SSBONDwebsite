@@ -274,7 +274,7 @@ def make_ssbond_without_repeat(map_list, map_id, mol_type_list):
 
 if __name__ == '__main__':
 	args = sys.argv[1:]
-	print args
+	print (args)
 	filename = args[0]
 	name = args[0].split('/')[-1].split('.')[0]
 	map_list, map_id ,mol_type_list= find_map_element(filename)

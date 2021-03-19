@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.http import JsonResponse
-from backend import process_loadedpdb
+from project.PreDisulfideBond.backend import process_loadedpdb
 import json
 import os
 from django.views.decorators import csrf
@@ -13,10 +13,10 @@ from django.http import FileResponse
 import chardet
 import copy
 import numpy as np
-import httplib
-import urllib2
-import createMU_AA as CA
-import sort_dict
+import httplib2
+from urllib.request import urlopen 
+import project.PreDisulfideBond.createMU_AA as CA
+from project.PreDisulfideBond.sort_dict import sort_dict
 
 def index(request):
     return render(request, 'index.html')
@@ -52,12 +52,12 @@ def result(request):
         result_dict1 = process_loadedpdb.process_pdb1(father_path + uploaded_file_url)
         #print father_path + uploaded_file_url
         result_dict1 = CA.energy2(father_path + uploaded_file_url,result_dict1)
-        ppp = sort_dict.sort_dict(result_dict1)
+        ppp = sort_dict(result_dict1)
         for key,value in result_dict1.items():
-            print key,value
+            print (key,value)
         if result_dict1 == False:
             wrongmsg = True
-            print wrongmsgs
+            print (wrongmsgs)
             return render(request, 'simple_upload.html', {
                 'wrongmsg': json.dumps(wrongmsg),
             })
@@ -68,7 +68,7 @@ def result(request):
     elif request.method == 'GET':
         PdbID = request.GET['a']
         url = 'https://files.rcsb.org/download/'+ PdbID +'.pdb'
-        f = urllib2.urlopen(url)
+        f = urlopen(url)
         data = f.readlines()
         downloadpdb = "media/%s.pdb"%PdbID
         #add the name into the filename
@@ -76,12 +76,12 @@ def result(request):
             code.writelines(data)
         result_dict2 = process_loadedpdb.process_pdb1(downloadpdb)
         result_dict2 = CA.energy2(downloadpdb,result_dict2)
-        ppp = sort_dict.sort_dict(result_dict2)
+        ppp = sort_dict(result_dict2)
         for key,value in result_dict2.items():
-            print key,value
+            print (key,value)
         if result_dict2 == False:
             wrongmsg1 = True
-            print wrongmsg1
+            print (wrongmsg1)
             return render(request, 'simple_upload.html', {
                 # 'reslut_dict': reslut_dict
                 'wrongmsg1': json.dumps(wrongmsg1),
@@ -96,9 +96,9 @@ def result(request):
 
 def comments_upload(request):
     if request.method == 'POST':
-        print "it's a test"                            #用于测试
-        print request.POST['name']           #测试是否能够接收到前端发来的name字段
-        print request.POST['password']     #用途同上
+        print ("it's a test")                            #用于测试
+        print (request.POST['name'])           #测试是否能够接收到前端发来的name字段
+        print (request.POST['password'])     #用途同上
 
         return HttpResponse("表单测试成功")     #最后返会给前端的数据，如果能在前端弹出框中显示我们就成功了
     else:
@@ -110,8 +110,8 @@ def integration(request):
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
-        print "!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        print myfile, myfile.name, upload_file_url
+        print ("!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print (myfile, myfile.name, upload_file_url)
         # process_loadedpdb.process_pdb()
         # print uploaded_file_url
         # return HttpResponse("文件上传成功")
